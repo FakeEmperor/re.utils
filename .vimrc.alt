@@ -1,0 +1,197 @@
+set nocompatible              " be iMproved, required
+
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+Plugin 'L9'
+" Git plugin not hosted on GitHub
+
+Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+" Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" " Install L9 and avoid a Naming conflict if you've already installed a
+" " different version somewhere else.
+"Plugin 'ascenator/L9', {'name': 'newL9'}
+"
+" Status themes
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+
+
+"" Themes here
+Plugin 'exitface/synthwave.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'NewProggie/NewProggie-Color-Scheme'
+Plugin 'ascenator/L9', {'name': 'newL9'}
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'jreybert/vimagit'
+Plugin 'felixhummel/setcolors.vim'
+Plugin 'flazz/vim-colorschemes' 
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin on
+set smartindent
+
+" set background=dark
+" syntax enable
+
+" Set colour theme
+"
+" Synthwave Theme (looks awful in 8bit term)
+" colorscheme synthwave
+
+" if has('termguicolors')
+"   set termguicolors " 24-bit terminal
+"   else
+"     let g:synthwave_termcolors=256 " 256 color mode
+" endif
+
+" Solarized theme
+" colorscheme solarized
+
+" New Proggie scheme
+" color newproggida
+
+"" Vim Airline thingies
+" ------------- Plugin configs ----------
+let g:airline#extensions#tabline#enabled = 1
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+set laststatus=2 
+
+" General remapping
+"
+" Remap escape sequences to sane values
+map <ESC>[5B <C-down>
+map <ESC>[5A <C-up>
+
+
+" Nove lines up or down
+nnoremap <A-up> mz:m-2<CR>`z==
+inoremap <A-up> <Esc>:m-2<CR>==gi
+vnoremap <A-up> :m'<-2<CR>gv=`>my`<mzgv`yo`z
+nnoremap <A-down> mz:m+<CR>`z==
+vnoremap <A-down> :m'>+<CR>gv=`<my`>mzgv`yo`z
+inoremap <A-down> <Esc>:m+<CR>==gi
+
+" new line
+nmap OO m`O<Esc>``
+nmap oo m`o<Esc>`` 
+imap <C-d> <C-o>diw
+nmap <C-d> daw
+
+" Disable highlight
+nnoremap <F3> :noh<CR>
+inoremap <F3> <C-o>:noh<CR>
+
+" Open tab
+nnoremap <C-e><C-e> :tabnew<CR>
+inoremap <C-e><C-e> <C-o>:tabnew<CR>
+
+" Close tab
+nnoremap <C-s> :tabclose<CR>
+inoremap <C-s> <C-o>:tabclose<CR>
+" Duplicate lines
+nnoremap , @='mqYp'<cr>
+nnoremap ,, @='mqYP'<cr>
+imap <C-down> <C-o>,
+imap <C-up> <C-o>,,
+
+" Disable paste-over register replace
+" I haven't found how to hide this function (yet)
+function! RestoreRegister()
+  let @" = s:restore_reg
+  return ''
+endfunction
+
+function! s:Repl()
+ let s:restore_reg = @"
+ return "p@=RestoreRegister()\<cr>"
+endfunction
+
+" NB: this supports "rp that replaces the selection by the
+" contents of @r
+vnoremap <silent> <expr> p <sid>Repl()
+
+
+" ------------- Automation -----------
+" Set workdir as file dir
+autocmd BufEnter * silent! lcd %:p:h
+" Go to last file(s) if invoked without arguments.
+autocmd VimLeave * nested if (!isdirectory($HOME . "/.vim")) | 
+  \ call mkdir($HOME . "/.vim") |
+  \ endif |
+  \ execute "mksession! " . $HOME . "/.vim/Session.vim"
+
+autocmd VimEnter * nested if argc() == 0 && filereadable($HOME . "/.vim/Session.vim") |
+    \ execute "source " . $HOME . "/.vim/Session.vim"
+
+"  Remember last edited line and jump to it
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+" Put plugins and dictionaries in this dir (also on Windows)
+set undofile                " Save undo's after file closes
+set undodir=$HOME/.vim/undo " where to save undo histories
+set undolevels=1000         " How many undos
+set undoreload=10000        " number of lines to save for undo
+
+let vimDir = '$HOME/.vim'
+let &runtimepath.=','.vimDir
+
+" Keep undo history across sessions by storing it in a file
+if has('persistent_undo')
+    let myUndoDir = expand(vimDir . '/undodir')
+    " Create dirs
+    call system('mkdir ' . vimDir)
+    call system('mkdir ' . myUndoDir)
+    let &undodir = myUndoDir
+    set undofile
+endif
+
+" ------------ Screen space -----------
+" Maximize window
+if has("gui_running")
+  " GUI is running or is about to start.
+  " Maximize gvim window (for an alternative on Windows, see simalt below).
+  " Use ~x on an English Windows version or ~n for French.
+  au GUIEnter * simalt ~x 
+  " or use this line for non-windows OS
+  " set lines=999 columns=999
+else
+  " This is console Vim.
+   let myUndoDir = expand(vimDir . '/undodir')
+   " Create dirs
+   call system('mkdir ' . vimDir)
+   call system('mkdir ' . myUndoDir)
+   let &undodir = myUndoDir
+   set undofile
+endif
+
+
+set number
+set ruler
+
+
