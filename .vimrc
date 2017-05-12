@@ -1,10 +1,10 @@
 set nocompatible
+
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=$HOME/.vim/bundle/Vundle.vim
 call vundle#begin()
-
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
@@ -17,48 +17,42 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
+Plugin 'L9'
 " Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
+
+Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
 " Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim'}
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" " Install L9 and avoid a Naming conflict if you've already installed a
+" " different version somewhere else.
+"Plugin 'ascenator/L9', {'name': 'newL9'}
+"
+" Status themes
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+
+
+"" Themes here
 Plugin 'exitface/synthwave.vim'
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'NewProggie/NewProggie-Color-Scheme'
 Plugin 'ascenator/L9', {'name': 'newL9'}
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'vim-airline/vim-airline' 
 Plugin 'sheerun/vim-polyglot'
 Plugin 'jreybert/vimagit'
 Plugin 'felixhummel/setcolors.vim'
 Plugin 'flazz/vim-colorschemes' 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
-" " filetype plugin indent on    " required
-" " To ignore plugin indent changes, instead use:
-" "
-" " Brief help
-" " :PluginList       - lists configured plugins
-" " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" " :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-" "
-" " see :h vundle for more details or wiki for FAQ
-" " Put your non-Plugin stuff after this line
-" 
-" " ------------- Plugin configs ----------
-" let g:ctrlp_map = '<c-p>'
-" let g:ctrlp_cmd = 'CtrlP'
-" set laststatus=2 
-" 
-" " ------------- Indentation stuff ---------
-set smartindent
 filetype plugin on
+" " filetype plugin indent on    " required
+set smartindent
 " ------------ Keyboard shortcuts ---------
 set timeoutlen=700 ttimeoutlen=0
 " Go to visual from insert mode
@@ -149,6 +143,11 @@ endif
 " Persistent undo
 
 " Put plugins and dictionaries in this dir (also on Windows)
+set undofile                " Save undo's after file closes
+set undodir=$HOME/.vim/undo " where to save undo histories
+set undolevels=1000         " How many undos
+set undoreload=10000        " number of lines to save for undo
+
 let vimDir = '$HOME/.vim'
 let &runtimepath.=','.vimDir
 
