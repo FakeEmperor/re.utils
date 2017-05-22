@@ -52,9 +52,9 @@ call vundle#end()            " required
 " " Put your non-Plugin stuff after this line
 " 
 " " ------------- Plugin configs ----------
-" let g:ctrlp_map = '<c-p>'
-" let g:ctrlp_cmd = 'CtrlP'
-" set laststatus=2 
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+set laststatus=2 
 " 
 " " ------------- Indentation stuff ---------
 set smartindent
