@@ -24,7 +24,8 @@ alias ll='ls -la $LS_OPTIONS'
 
 # COLORING - enclose text in "\[\033[$WIDTH_TYPE$;$COLOR$m\]"
 # Example - \[\033[01;31m\] (bold red)
-ps1='\[\033[01;31m\]\u\[\033[00;31m\]@\[\033[01;31m\]\h\[\033[01;31m\]:\[\033[01;31m\]\w\[\033[01;31m\]\$\[\033[00m\] '
+color=31
+ps1='\[\033[01;${color}m\]\u@\h:\w\$\[\033[00m\] '
 time_addon='\D{%d.%m.%Y %H:%M}'
 time_addon_color='\[\033[02;35m\]'
 
