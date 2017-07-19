@@ -147,6 +147,13 @@ vnoremap // y/<C-R>"<CR>
 " Enable paste undo
 " inoremap <C-R> <C-G>u<C-R>
 
+" Allow to hide line numbers by pressing ALT-N twice
+inoremap <Leader>n <C-o>:set invnumber<CR>
+nnoremap <Leader>n :set invnumber<CR>
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
+
 " Move lines up or down
 nnoremap <A-up> :m-2<CR>
 inoremap <A-up> <Esc>:m-2<CR>
