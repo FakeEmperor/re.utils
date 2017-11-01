@@ -100,7 +100,7 @@ let g:solarized_contrast="high"
 " Remap solarized background switch key
 let g:solarized_termcolors=256
 colorscheme solarized
-
+set encoding=utf-8
 " New Proggie scheme
 " color newproggida
 
