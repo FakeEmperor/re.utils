@@ -20,7 +20,7 @@ alias ls='ls $LS_OPTIONS'
 alias grep='grep $LS_OPTIONS'
 alias la='ls -a $LS_OPTIONS'
 alias ll='ls -la $LS_OPTIONS'
-# if time is enabled
+
 
 # COLORING - enclose text in "\[\033[$WIDTH_TYPE$;$COLOR$m\]"
 # Example - \[\033[01;31m\] (bold red)
@@ -28,7 +28,7 @@ color=31
 ps1='\[\033[01;${color}m\]\u@\h:\w\$\[\033[00m\] '
 time_addon='\D{%d.%m.%Y %H:%M}'
 time_addon_color='\[\033[02;35m\]'
-
+# Append time to each command prompt
 time_addon_enable=false
 time_addon_newline=true
 if [ "$time_addon_enable" = true ] ; then
